@@ -35,7 +35,9 @@ This data never leaves your browser except as described below.
 
 ### License activation (Plus users only)
 
-When you activate a Plus license, PasteFlow sends **your license key** and your local **`install_id`** to a Cloudflare Worker at `pasteflow-license-worker.roman-bc7.workers.dev`. The worker stores a **cryptographic hash** of the key (not the plaintext key) in its database, along with a list of up to **three** `install_id` values that have successfully activated — so your license works on a few personal devices, but cannot be shared broadly. Your name, email, and personal information are **not** required for activation. After activation succeeds, **no further network requests** are made for typing or license checks.
+When you activate a Plus license, PasteFlow sends **your license key** and your local **`install_id`** to a Cloudflare Worker at `pasteflow-license-worker.roman-bc7.workers.dev`. The worker stores a **cryptographic hash** of the key (not the plaintext key) in its database, along with a list of up to **three** `install_id` values that have successfully activated — so your license works on a few personal devices, but cannot be shared broadly. Your name, email, and personal information are **not** required for activation.
+
+For **abuse prevention** (detecting license keys that appear widely shared), each successful activation also records an **anonymized** event: a one-way hash of your network address (combined with a daily-rotating salt — the raw IP is never stored), an approximate country code from Cloudflare, and a timestamp. These events expire after about **90 days**. PasteFlow does **not** use this to block normal activations automatically; unusually high distinct-network patterns are reviewed manually. After activation succeeds, **no further network requests** are made for typing or routine license checks.
 
 ### Payment (Stripe)
 
