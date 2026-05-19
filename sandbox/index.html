@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PasteFlow QA Sandbox</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Arial, sans-serif;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 24px;
+        background: #f5f7fb;
+        color: #18202a;
+      }
+      section {
+        margin-bottom: 20px;
+        padding: 14px;
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        background: #fff;
+      }
+      input, textarea, [contenteditable="true"] {
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: 8px;
+        font: inherit;
+      }
+      input, textarea {
+        padding: 10px 12px;
+        border: 1px solid #94a3b8;
+        border-radius: 8px;
+      }
+      textarea { min-height: 110px; resize: vertical; }
+      .editable {
+        min-height: 110px;
+        border: 1px solid #94a3b8;
+        border-radius: 8px;
+        padding: 10px 12px;
+        background: #fff;
+      }
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .modePicker {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .modeBtn {
+        padding: 8px 12px;
+        border: 1px solid #64748b;
+        border-radius: 999px;
+        background: #f8fafc;
+        color: #1e293b;
+        cursor: pointer;
+        font-size: 13px;
+      }
+      .modeBtn[aria-pressed="true"] {
+        border-color: #2563eb;
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+      .modeSurface {
+        min-height: 140px;
+        border: 1px solid #94a3b8;
+        border-radius: 12px;
+        padding: 12px 14px;
+        background: #fff;
+      }
+      .modeSurface[data-mode="docs"] {
+        border-color: #60a5fa;
+        box-shadow: inset 0 0 0 1px #dbeafe;
+        font-family: "Times New Roman", Times, serif;
+        line-height: 1.45;
+      }
+      .modeSurface[data-mode="prosemirror"] {
+        border-color: #14b8a6;
+        box-shadow: inset 0 0 0 1px #ccfbf1;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+      }
+      .modeSurface[data-mode="generic"] {
+        font-family: Arial, sans-serif;
+      }
+      .toolbar {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 16px 0 20px;
+      }
+      .toolbar button {
+        padding: 10px 14px;
+        border: 1px solid #2563eb;
+        border-radius: 999px;
+        background: #eff6ff;
+        color: #1d4ed8;
+        cursor: pointer;
+      }
+      .toolbar button.copy-btn {
+        border-color: #7c3aed;
+        background: #f5f3ff;
+        color: #6d28d9;
+      }
+      .status {
+        margin: 14px 0 18px;
+        padding: 12px 14px;
+        border-radius: 10px;
+        background: #e2e8f0;
+      }
+      .status strong {
+        display: inline-block;
+        min-width: 140px;
+      }
+      .hint {
+        margin: 8px 0 0;
+        color: #475569;
+        font-size: 14px;
+      }
+      .chipRow {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        background: #e2e8f0;
+        padding: 5px 10px;
+        font-size: 12px;
+      }
+      .chip.warn {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .verify-section {
+        margin-top: 10px;
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+      .verify-section textarea {
+        min-height: 60px;
+        flex: 1;
+        font-size: 13px;
+      }
+      #verifyResult {
+        margin-top: 8px;
+        font-size: 13px;
+        padding: 8px 10px;
+        border-radius: 6px;
+        background: #e2e8f0;
+      }
+      #verifyResult.pass { background: #d1fae5; color: #065f46; }
+      #verifyResult.fail { background: #fee2e2; color: #991b1b; }
+      @media (max-width: 720px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>PasteFlow QA Sandbox</h1>
+    <p>Use this page to verify input, textarea, and contenteditable compatibility without guessing which field is active.</p>
+
+    <div class="toolbar" aria-label="QA helpers">
+      <button type="button" data-focus-target="sampleInput">Focus input</button>
+      <button type="button" data-focus-target="sampleTextarea">Focus textarea</button>
+      <button type="button" data-focus-target="sampleEditable">Focus contenteditable</button>
+      <button type="button" id="resetAll">Reset all fields</button>
+    </div>
+
+    <div class="toolbar" aria-label="Test samples — click to copy to clipboard">
+      <span style="font-size:13px;color:#475569;align-self:center;">Test samples:</span>
+      <button type="button" class="copy-btn" data-sample="Hello test 123">S1 — Short</button>
+      <button type="button" class="copy-btn" data-sample="Line one&#10;Line two&#10;Line three">S2 — Multi-line</button>
+      <button type="button" class="copy-btn" data-sample="Привет 你好 مرحبا bonjour">S3 — Multilingual</button>
+    </div>
+
+    <div class="status" aria-live="polite">
+      <div><strong>Active target:</strong> <span id="activeTarget">None</span></div>
+      <div><strong>Last input event:</strong> <span id="lastEvent">None</span></div>
+    </div>
+
+    <div class="grid">
+      <section>
+        <h2>Single-line Input</h2>
+        <input id="sampleInput" type="text" placeholder="Click here, then type via extension" />
+        <p class="hint">Expected: plain text inserts at the caret, no line breaks.</p>
+      </section>
+
+      <section>
+        <h2>Textarea</h2>
+        <textarea id="sampleTextarea" placeholder="Click here, then type via extension"></textarea>
+        <p class="hint">Expected: multi-line text inserts naturally and preserves newlines.</p>
+      </section>
+    </div>
+
+    <section>
+      <h2>Contenteditable</h2>
+      <div id="sampleEditable" contenteditable="true" class="editable">Click here, then type via extension.</div>
+      <p class="hint">Expected: rich-text style editable remains focused and receives sequential text.</p>
+      <div class="chipRow" aria-label="Sandbox coverage">
+        <span class="chip">input</span>
+        <span class="chip">textarea</span>
+        <span class="chip">contenteditable</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>App-style Editor Mock</h2>
+      <p class="hint">This does not emulate real app internals. It only changes editable surface structure/styling to catch generic rich-editor regressions before live app QA.</p>
+      <div class="modePicker" role="group" aria-label="Editor mode presets">
+        <button type="button" class="modeBtn" data-mode="generic" aria-pressed="true">Generic editor</button>
+        <button type="button" class="modeBtn" data-mode="docs" aria-pressed="false">Docs-style editor</button>
+        <button type="button" class="modeBtn" data-mode="prosemirror" aria-pressed="false">ProseMirror-style editor</button>
+      </div>
+      <div id="modeEditor" contenteditable="true" class="modeSurface" data-mode="generic">Mode mock is active. Click here, then type via extension.</div>
+      <div class="chipRow">
+        <span class="chip">contenteditable</span>
+        <span class="chip">mode preset</span>
+        <span class="chip">generic regression guard</span>
+      </div>
+    </section>
+
+    <!-- Sensitive field type tests: Human mode guard (#56) -->
+    <section>
+      <h2>Sensitive field types — Human mode guard</h2>
+      <p class="hint" style="margin-bottom:12px;">Human mode should be automatically disabled on these field types. Type via extension and confirm no backspace/retype mistakes occur.</p>
+      <div class="grid">
+        <div>
+          <label for="samplePassword" style="font-size:13px;color:#475569;">Password input</label>
+          <input id="samplePassword" type="password" placeholder="Type via extension — no mistakes expected" autocomplete="new-password" />
+          <p class="hint">Expected: text delivered without human-mode mistakes.</p>
+          <div class="chipRow"><span class="chip warn">human mode off</span></div>
+        </div>
+        <div>
+          <label for="sampleEmail" style="font-size:13px;color:#475569;">Email input</label>
+          <input id="sampleEmail" type="email" placeholder="Type via extension — no mistakes expected" />
+          <p class="hint">Expected: text delivered without human-mode mistakes.</p>
+          <div class="chipRow"><span class="chip warn">human mode off</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Output verifier -->
+    <section>
+      <h2>Output Verifier</h2>
+      <p class="hint" style="margin-bottom:10px;">Paste your staged text and the result to compare them.</p>
+      <div class="verify-section">
+        <div style="flex:1">
+          <label style="font-size:13px;color:#475569;">Staged (expected)</label>
+          <textarea id="verifyExpected" placeholder="Paste the exact text you staged in the extension"></textarea>
+        </div>
+        <div style="flex:1">
+          <label style="font-size:13px;color:#475569;">Result (actual — copy from typed field)</label>
+          <textarea id="verifyActual" placeholder="Paste what appeared in the destination field"></textarea>
+        </div>
+      </div>
+      <button type="button" id="verifyBtn" style="margin-top:8px;padding:8px 16px;border:1px solid #2563eb;border-radius:8px;background:#eff6ff;color:#1d4ed8;cursor:pointer;">Compare</button>
+      <div id="verifyResult" hidden></div>
+    </section>
+
+    <script>
+      const input = document.getElementById("sampleInput");
+      const textarea = document.getElementById("sampleTextarea");
+      const editable = document.getElementById("sampleEditable");
+      const passwordInput = document.getElementById("samplePassword");
+      const emailInput = document.getElementById("sampleEmail");
+      const modeEditor = document.getElementById("modeEditor");
+      const modeButtons = document.querySelectorAll(".modeBtn");
+      const activeTargetEl = document.getElementById("activeTarget");
+      const lastEventEl = document.getElementById("lastEvent");
+      const resetAllBtn = document.getElementById("resetAll");
+      const focusButtons = document.querySelectorAll("[data-focus-target]");
+      const sampleButtons = document.querySelectorAll("[data-sample]");
+      const verifyBtn = document.getElementById("verifyBtn");
+      const verifyResult = document.getElementById("verifyResult");
+      const verifyExpected = document.getElementById("verifyExpected");
+      const verifyActual = document.getElementById("verifyActual");
+
+      const allFields = [input, textarea, editable, passwordInput, emailInput, modeEditor];
+
+      function labelFor(el) {
+        if (el === input) return "Single-line Input";
+        if (el === textarea) return "Textarea";
+        if (el === editable) return "Contenteditable";
+        if (el === passwordInput) return "Password Input";
+        if (el === emailInput) return "Email Input";
+        if (el === modeEditor) {
+          const mode = modeEditor.getAttribute("data-mode") || "generic";
+          if (mode === "docs") return "Docs-style editor mock";
+          if (mode === "prosemirror") return "ProseMirror-style editor mock";
+          return "Generic editor mock";
+        }
+        return "None";
+      }
+
+      function updateActiveTarget(el) {
+        activeTargetEl.textContent = labelFor(el);
+      }
+
+      function updateLastEvent(kind, el) {
+        lastEventEl.textContent = `${kind} on ${labelFor(el)}`;
+      }
+
+      allFields.forEach((el) => {
+        el.addEventListener("focus", () => updateActiveTarget(el));
+        el.addEventListener("input", () => updateLastEvent("input", el));
+        el.addEventListener("keydown", () => updateLastEvent("keydown", el));
+      });
+
+      focusButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = document.getElementById(button.dataset.focusTarget);
+          if (target) target.focus();
+        });
+      });
+
+      modeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const mode = button.dataset.mode || "generic";
+          modeEditor.setAttribute("data-mode", mode);
+          modeButtons.forEach((other) => {
+            other.setAttribute("aria-pressed", other === button ? "true" : "false");
+          });
+          modeEditor.focus();
+          updateLastEvent("mode-switch", modeEditor);
+        });
+      });
+
+      sampleButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const text = button.dataset.sample;
+          navigator.clipboard.writeText(text).then(() => {
+            const orig = button.textContent;
+            button.textContent = "Copied!";
+            setTimeout(() => { button.textContent = orig; }, 1500);
+          }).catch(() => {
+            button.textContent = "Use Ctrl+C";
+            setTimeout(() => { button.textContent = button.dataset.sample.slice(0, 8) + "…"; }, 1500);
+          });
+        });
+      });
+
+      resetAllBtn.addEventListener("click", () => {
+        input.value = "";
+        textarea.value = "";
+        editable.textContent = "Click here, then type via extension.";
+        passwordInput.value = "";
+        emailInput.value = "";
+        modeEditor.textContent = "Mode mock is active. Click here, then type via extension.";
+        modeEditor.setAttribute("data-mode", "generic");
+        modeButtons.forEach((button) => {
+          button.setAttribute("aria-pressed", button.dataset.mode === "generic" ? "true" : "false");
+        });
+        updateActiveTarget(null);
+        lastEventEl.textContent = "Reset all fields";
+        verifyResult.hidden = true;
+      });
+
+      verifyBtn.addEventListener("click", () => {
+        const expected = verifyExpected.value;
+        const actual = verifyActual.value;
+        if (!expected || !actual) {
+          verifyResult.textContent = "Paste both expected and actual text first.";
+          verifyResult.className = "";
+          verifyResult.hidden = false;
+          return;
+        }
+        if (expected === actual) {
+          verifyResult.textContent = `✓ PASS — exact match (${[...actual].length} chars)`;
+          verifyResult.className = "pass";
+        } else {
+          const expLen = [...expected].length;
+          const actLen = [...actual].length;
+          verifyResult.textContent = `✗ FAIL — expected ${expLen} chars, got ${actLen} chars. Check for missing/extra characters or encoding differences.`;
+          verifyResult.className = "fail";
+        }
+        verifyResult.hidden = false;
+      });
+    </script>
+  </body>
+</html>

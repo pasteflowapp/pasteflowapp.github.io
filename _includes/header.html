@@ -1,0 +1,41 @@
+<header class="site-header" role="banner">
+  <div class="wrapper site-header-top">
+    <a class="site-title" rel="author" href="{{ '/support/' | relative_url }}">
+      <img src="{{ '/assets/images/icon.svg' | relative_url }}" class="site-logo" alt="" width="24" height="24" decoding="async">
+      <span class="site-title-text">{{ site.title | escape }}</span>
+    </a>
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger">
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+      <div class="trigger">
+        <a class="page-link" href="{{ '/support/getting-started/' | relative_url }}">Getting Started</a>
+        <a class="page-link" href="{{ '/support/faq/' | relative_url }}">FAQ</a>
+        <a class="page-link" href="{{ '/support/troubleshooting/' | relative_url }}">Troubleshooting</a>
+        <a class="page-link" href="{{ '/support/compatibility/' | relative_url }}">Compatibility</a>
+        <a class="page-link" href="{{ '/support/keyboard-shortcuts/' | relative_url }}">Shortcuts</a>
+        <a class="page-link" href="{{ '/support/release-notes/' | relative_url }}">Release Notes</a>
+      </div>
+    </nav>
+  </div>
+  <div class="wrapper site-header-searchRow">
+    <div class="pf-header-search" data-pf-site-search>
+      <input
+        type="search"
+        data-pf-search-input
+        class="siteSearchInput siteSearchInput--nav"
+        placeholder="Search help topics…"
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="Search help topics"
+      />
+      <ul data-pf-search-results class="siteSearchResults siteSearchResults--nav" aria-live="polite"></ul>
+      <p data-pf-search-status class="siteSearchStatus siteSearchStatus--nav" hidden></p>
+    </div>
+  </div>
+</header>

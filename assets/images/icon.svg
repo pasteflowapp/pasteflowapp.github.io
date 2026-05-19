@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="PasteFlow icon">
+  <title>PasteFlow</title>
+  <defs>
+    
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1c2333"></stop>
+      <stop offset="55%" stop-color="#141826"></stop>
+      <stop offset="100%" stop-color="#0b0e16"></stop>
+    </linearGradient>
+    
+    <linearGradient id="bevel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.18"></stop>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0"></stop>
+    </linearGradient>
+    
+    <radialGradient id="ambient" cx="30%" cy="20%" r="80%">
+      <stop offset="0%" stop-color="#53ccff" stop-opacity="0.18"></stop>
+      <stop offset="55%" stop-color="#53ccff" stop-opacity="0"></stop>
+    </radialGradient>
+    
+    <linearGradient id="markCyan" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7ad9ff"></stop>
+      <stop offset="100%" stop-color="#3eb8ee"></stop>
+    </linearGradient>
+    
+    <linearGradient id="markViolet" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#b59cff"></stop>
+      <stop offset="100%" stop-color="#8a6bff"></stop>
+    </linearGradient>
+  </defs>
+
+  
+  <rect x="0" y="0" width="128" height="128" rx="28" ry="28" fill="url(#plate)"></rect>
+  <rect x="0" y="0" width="128" height="128" rx="28" ry="28" fill="url(#ambient)"></rect>
+  
+  <rect x="0" y="0" width="128" height="64" rx="28" ry="28" fill="url(#bevel)"></rect>
+  
+  <rect x="0.5" y="0.5" width="127" height="127" rx="27.5" ry="27.5" fill="none" stroke="#2a3347" stroke-width="1" stroke-opacity="0.7"></rect>
+
+  
+  
+  <rect x="30" y="22" width="18" height="84" rx="3" ry="3" fill="url(#markCyan)"></rect>
+  
+  <path d="M48 22 H82 a16 16 0 0 1 16 16 v16 a16 16 0 0 1 -16 16 H48 Z" fill="url(#markCyan)"></path>
+  
+  <path d="M48 36 H80 a8 8 0 0 1 8 8 v4 a8 8 0 0 1 -8 8 H48 Z" fill="#0f1219"></path>
+
+  
+  <rect x="62" y="34" width="6" height="24" rx="1.5" ry="1.5" fill="url(#markViolet)"></rect>
+  <rect x="58" y="34" width="14" height="3" rx="1" ry="1" fill="url(#markViolet)"></rect>
+  <rect x="58" y="55" width="14" height="3" rx="1" ry="1" fill="url(#markViolet)"></rect>
+</svg>

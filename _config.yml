@@ -1,0 +1,28 @@
+title: PasteFlow
+description: Help for the PasteFlow Chrome extension — human-paced typing into Google Docs, Word Online, forms, and web editors.
+baseurl: ""
+url: "https://pasteflowapp.github.io"
+permalink: pretty
+theme: minima
+logo: "/assets/images/icon.svg"
+
+minima:
+  skin: dark
+
+header_pages:
+  - support/getting-started.md
+  - support/faq.md
+  - support/keyboard-shortcuts.md
+  - support/compatibility.md
+  - support/privacy.md
+  - support/permissions.md
+  - support/troubleshooting.md
+  - support/terms.md
+  - support/release-notes.md
+  - support/search.md
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default

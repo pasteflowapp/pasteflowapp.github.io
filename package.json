@@ -1,0 +1,12 @@
+{
+  "name": "pasteflow-support-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "docs:search-index": "node scripts/build-docs-search-index.mjs",
+    "check:docs-links": "node scripts/check-docs-links.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
