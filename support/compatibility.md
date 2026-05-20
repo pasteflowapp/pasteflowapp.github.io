@@ -23,6 +23,45 @@ PasteFlow uses character-by-character keyboard event simulation to type into web
 
 ---
 
+## Languages and Unicode text
+
+PasteFlow types **Unicode text**, not English or ASCII only. Your staged text can mix scripts in one run — for example English, Russian, Hindi, accented Latin, emoji, and symbols — as long as the **destination editor** accepts those characters when you type normally.
+
+### What that means in practice
+
+- **European and Latin-script languages** — French, German, Spanish, Polish, Vietnamese (Latin letters), etc. work the same way as English.
+- **Cyrillic** — Russian, Ukrainian, Bulgarian, etc.
+- **Greek, Hebrew, Arabic, Devanagari (Hindi), Thai, CJK** (Chinese, Japanese, Korean), and other scripts encoded in Unicode are typed **one grapheme at a time** (user-visible character), using the browser’s grapheme segmentation when available.
+- **Emoji and combined characters** — PasteFlow aims to send whole grapheme clusters (e.g. skin-tone emoji) as single steps where the browser supports `Intl.Segmenter`.
+
+There is **no separate language pack** and **no list of “supported languages.”** If you can paste the text into the field yourself, Inspect Target is **Ready**, and a short test run looks correct, that script is supported for **normal typing**.
+
+### Human Mode and non-English text
+
+**Human Mode** (the Composer toggle) adds realistic pauses and variable timing for **any Unicode letters**, not only A–Z.
+
+| Where you type | Human Mode behavior |
+| --- | --- |
+| **Google Docs** | **Timing only** for all languages — cadence, recall pauses, and punctuation pauses apply; deliberate typo + backspace “corrections” are **not** used in Docs because delete transport is unreliable there. Final text stays correct. |
+| **Google Sheets, standard inputs, most `contenteditable` fields** | Full Human Mode when the field allows it — timing **plus** occasional visible mistakes and corrections on Unicode words (Cyrillic, accented Latin, etc.), same idea as English. |
+| **Password, email, URL, number, phone fields** | Human Mode is **off** automatically (any language) — mid-word correction would corrupt these field types. |
+
+### Right-to-left and complex scripts
+
+**Arabic, Hebrew, Persian, Urdu**, and other **right-to-left** languages use Unicode like any other script. PasteFlow still injects keystrokes in logical order; **how the editor displays cursor position and line direction** depends on Google Docs, Word Online, or the site’s own editor. If something looks wrong visually but the characters are correct after the run, that is usually editor layout — email [pasteflow.support@gmail.com](mailto:pasteflow.support@gmail.com?subject=PasteFlow%20Support%20Request) with Diagnostic Probe output.
+
+**Complex shaping** (connected Arabic letters, some Indic stacks) is handled by the **host application**, not by PasteFlow choosing glyph shapes. Use **Safe** speed on heavy web editors if characters are dropped at Fast speed.
+
+### What is *not* a “language” limitation
+
+These are **platform or field** limits from the table above, not Unicode exclusions:
+
+- **Gmail, Google Slides, native desktop apps** — not supported in v1 (see below).
+- **Canvas-only or custom input widgets** that reject keyboard input — may fail Inspect Target regardless of language.
+- **Legacy encodings** (e.g. old desktop files not opened in the browser) — web pages already use Unicode; PasteFlow does not target non-Unicode encodings separately.
+
+---
+
 ## Speed recommendations by platform
 
 | Platform | Recommended speed | Why |
