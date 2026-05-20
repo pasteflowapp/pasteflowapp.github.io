@@ -110,7 +110,7 @@ Characters already typed are always preserved — stopping never deletes anythin
 
 ## Saving text for reuse: Snippets
 
-> **Note:** Snippets are currently available to early-access users only. The feature will be visible in the Composer once it ships in a public release. See [FAQ]({{ '/support/faq/' | relative_url }}) for details.
+> **Snippets:** Save reusable text in the Composer (**Snippets** section). See [FAQ — Snippets]({{ '/support/faq/' | relative_url }}) for save, load, export, and import.
 
 Snippets let you save any block of text under a name and reload it instantly.
 
