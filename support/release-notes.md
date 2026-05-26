@@ -10,19 +10,13 @@ What changed in each version of PasteFlow.
 
 ---
 
-## v1.0.1 — In progress
+## v1.0.1 — UAT candidate
 
-> This release is in active development. The items below are implemented and in UAT; the version has not yet been promoted to a stable Chrome Web Store release.
+> This release is implemented locally and is the current QA/UAT candidate. It has not yet been promoted to the stable Chrome Web Store listing.
 
-- **License activation retry** — PasteFlow now retries activation silently up to 5 times with a short delay between attempts, eliminating false “key not found” errors caused by Cloudflare KV propagation delay.
-- **Plus device limit** — activation sends a stable per-browser `install_id`; the license server allows up to **three** devices per key. Past that, activation returns a clear error — email **pasteflow.support@gmail.com** for a reset after purchase verification.
-- **Help site search** — [Search](https://pasteflowapp.github.io/support/search/) page on the support site with a client-side index over public docs.
-- **Human Mode** — the Composer toggle is labeled **Human Mode** with a clearer tooltip; the speed section separates Base Speed (Safe/Slow/Normal/Fast) from the Human Mode overlay toggle.
-- **Google Docs architecture** — Docs routing/inspect remain explicit on the content-script web-editor adapter with MAIN-world sink bridge/focus handoff; when Docs rejects a bridge commit, the content-script run asks the service worker for a Docs-only native-input character while Pause/Resume/Stop stay in the same run loop.
-- **Partial run recovery** — if typing stops mid-run, PasteFlow saves your position and offers to resume exactly where it left off when you reopen the panel (up to 4 hours).
-- **Live WPM counter** — a live words-per-minute estimate appears alongside the progress bar during an active run.
-- **Run completion summary** — after each run, a brief summary shows characters typed, time elapsed, and approximate WPM.
-- **Composer ↔ background sync** — the Composer correctly resets or re-adopts “typing in progress” after tab switches, closed tabs, or side-panel refocus.
+- **Pause -> toggle Human Mode off -> resume** — if you pause an active run, turn Human Mode off, and resume, the remaining text now continues with plain timing instead of keeping Human-style typo/correction behavior from the earlier plan.
+- **Activation retry** — PasteFlow now retries activation silently for short backend propagation delays, reducing false “key not found” errors right after purchase.
+- **Recovery and progress feedback** — partial runs recover more cleanly, with clearer progress feedback while typing.
 
 ---
 
