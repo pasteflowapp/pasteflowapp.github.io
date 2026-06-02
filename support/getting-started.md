@@ -38,10 +38,10 @@ Choose a **base speed** for keystroke timing. The Composer shows **Safe**, **Slo
 
 | Speed | Pace | Best for |
 |---|---|---|
-| **Safe** | 180–260 ms/char | Google Docs, Word Online, Excel Online — complex editors that need slower input |
-| **Normal** | 40–70 ms/char | Standard web forms, CMS blocks, most fields — natural human typing rhythm |
-| **Slow** | 120–180 ms/char | Sensitive fields where Normal feels too fast |
-| **Fast** | 5–14 ms/char | Simple inputs where speed matters and the site isn't rate-limited |
+| **Slow** | 350–450 ms/char | ~30 WPM — like a child typing; slowest and most deliberate |
+| **Safe** | 180–260 ms/char | ~55 WPM — a relaxed human, not in a rush; best for Google Docs, Word Online, Excel Online |
+| **Normal** | 40–70 ms/char | ~220 WPM — standard web forms, CMS blocks, most fields |
+| **Fast** | 5–14 ms/char | ~1.2k WPM — truly fast; simple inputs where speed matters and the site isn't rate-limited |
 
 There is also a **Human** speed row in the grid — that is a **fixed “human-speed” timing preset** (80–140 ms/char). It is **not** the same control as **Human Mode** (the separate toggle below).
 
