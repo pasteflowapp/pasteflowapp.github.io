@@ -10,13 +10,12 @@ What changed in each version of PasteFlow.
 
 ---
 
-## v1.0.1 — UAT candidate
+## v1.1.0 — Windows Chrome support · Speed preset overhaul · Human Mode improvements
 
-> This release is implemented locally and is the current QA/UAT candidate. It has not yet been promoted to the stable Chrome Web Store listing.
-
-- **Pause -> toggle Human Mode off -> resume** — if you pause an active run, turn Human Mode off, and resume, the remaining text now continues with plain timing instead of keeping Human-style typo/correction behavior from the earlier plan.
-- **Activation retry** — PasteFlow now retries activation silently for short backend propagation delays, reducing false “key not found” errors right after purchase.
-- **Recovery and progress feedback** — partial runs recover more cleanly, with clearer progress feedback while typing.
+- **Windows Chrome:** Improved compatibility for Windows Chrome users, including correct speed picker display and more consistent typing behavior.
+- **Speed presets overhauled:** Slow, Safe, Normal, and Fast are now clearly distinct — the difference between presets is meaningful and predictable.
+- **Human Mode on the fly:** Toggle Human Mode on or off at any point during a run, no pause required.
+- **Stability and bug fixes:** Activation retries automatically when the license backend is still propagating. Partial runs recover more cleanly with clearer progress feedback.
 
 ---
 
