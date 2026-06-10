@@ -25,7 +25,7 @@ PasteFlow stores values in `chrome.storage.local` on your device, including:
 
 | Key | What it stores | Why |
 |---|---|---|
-| `free_chars_typed` | Lifetime count of characters successfully typed (Free tier only) | To enforce the 10,000-character free limit |
+| `free_chars_typed` | Lifetime count of characters successfully typed (Free tier only) | To enforce the 3,000-character free limit |
 | `plus_status` | `"free"` or `"plus"` | To know whether to enforce the limit |
 | `license_key` | Your Plus license key, if activated | For display in Manage License only |
 | `install_id` | A random ID generated on first use of this browser profile | Sent with license activation so the server can allow up to **three** personal devices per key (see below) |

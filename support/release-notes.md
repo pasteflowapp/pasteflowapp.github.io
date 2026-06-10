@@ -46,7 +46,7 @@ What changed in each version of PasteFlow.
 - One-time prompt only — appears once per install and is not shown again after you respond
 
 ### Licensing
-- Free tier: 10,000 lifetime typed characters (counted post-delivery, not pre-typing)
+- Free tier: 3,000 lifetime typed characters (counted post-delivery, not pre-typing)
 - Plus tier: unlimited typing — one-time purchase of $4.99, no subscription
 - Manage License panel: view status, enter license key, open payment link
 - Soft upgrade prompt when Free balance drops below 2,000 characters

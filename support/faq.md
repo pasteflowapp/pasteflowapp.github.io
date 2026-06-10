@@ -17,7 +17,7 @@ nav_order: 2
 | Does it store my text? | No — text stays in your browser only |
 | Do I need an account? | No — no sign-in, no email |
 | Does it auto-submit forms? | Never — PasteFlow only types |
-| Free tier limit? | 10,000 characters |
+| Free tier limit? | 3,000 characters |
 | Plus price? | $4.99 one-time, no subscription |
 
 ---
@@ -86,7 +86,7 @@ Both tiers include all features and all supported platforms. The only difference
 |---|---|---|
 | All features | ✓ | ✓ |
 | All supported platforms | ✓ | ✓ |
-| Lifetime typed characters | 10,000 | Unlimited |
+| Lifetime typed characters | 3,000 | Unlimited |
 | Price | Free | $4.99 one-time |
 | Subscription | None | None |
 
