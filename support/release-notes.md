@@ -10,6 +10,15 @@ What changed in each version of PasteFlow.
 
 ---
 
+## v1.1.1 — Free-character limit alignment · Upgrade-state polish
+
+- **Free tier aligned to launch pricing:** Free users now get 3,000 lifetime typed characters, counted only after characters are delivered to the destination field.
+- **Clearer over-limit handling:** PasteFlow now blocks before typing when Composer text is longer than the remaining free balance and explains the remaining character count.
+- **Zero-character state polished:** The Composer shows a compact upgrade banner and a focused upgrade/manage-license modal when no free characters remain.
+- **Store metadata cleanup:** Chrome Web Store copy now reflects the 3,000-character Free tier and removes disabled/unsupported feature claims.
+
+---
+
 ## v1.1.0 — Windows Chrome support · Speed preset overhaul · Human Mode improvements
 
 - **Windows Chrome:** Improved compatibility for Windows Chrome users, including correct speed picker display and more consistent typing behavior.
