@@ -1,12 +1,28 @@
+/*
+ * Client-side help search for the PasteFlow support site.
+ *
+ * Fetches the prebuilt index (assets/search-index.json, produced by
+ * scripts/build-docs-search-index.mjs) and does a plain substring match over
+ * each page's title + text. No dependencies; runs as an IIFE loaded with
+ * `defer` from _includes/custom-head.html.
+ *
+ * Markup contract: each search widget is a [data-pf-site-search] container with
+ * a [data-pf-search-input], [data-pf-search-results], and optional
+ * [data-pf-search-status]. A legacy #siteSearchInput / #siteSearchResults form
+ * is still supported as a fallback.
+ */
 (function () {
   "use strict";
 
+  // HTML-escape a string by round-tripping it through a text node.
   function esc(s) {
     var d = document.createElement("div");
     d.textContent = s;
     return d.innerHTML;
   }
 
+  // Resolve an index entry's URL against site.baseurl (empty for this site,
+  // but kept so the widget also works under a project-page baseurl).
   function hrefFor(entry, base) {
     if (!entry || !entry.url) return "#";
     if (entry.url.startsWith("http")) return entry.url;
@@ -16,6 +32,7 @@
     return base + path;
   }
 
+  // Locate the index: prefer the meta tag, else derive it from this script's src.
   function getIndexUrl() {
     var m = document.querySelector('meta[name="pasteflow-search-index"]');
     if (m && m.content) return m.content;
@@ -31,6 +48,8 @@
     return typeof b === "string" ? b : "";
   }
 
+  // Render results for query `q`. Header-nav widgets stay empty until the user
+  // types; the standalone search page lists all pages when the box is empty.
   function renderInto(input, list, status, entries, q) {
     list.innerHTML = "";
     var needle = (q || "").trim().toLowerCase();
@@ -108,6 +127,7 @@
     });
   }
 
+  // Fetch the index and wire every widget; on failure show an inline message.
   function loadEntriesThenInit() {
     var indexUrl = getIndexUrl();
     if (!indexUrl) return;

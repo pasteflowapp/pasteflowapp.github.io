@@ -19,4 +19,4 @@ Chrome extension source, Worker, private issues, or agent SOPs — those belong 
 
 ## Local layout
 
-This repo is a **sibling** of **`PasteFlow/`** under **`Projects/PasteF/`** on Google Drive. It may also live at **`PasteFlow/pasteflowapp.github.io/`** (nested inside the product repo); `scripts/resolve-support-site-root.sh` supports both layouts.
+This repo is a **sibling** of **`PasteFlow/`** under **`Projects/PasteF/`** on Google Drive. It may also live at **`PasteFlow/pasteflowapp.github.io/`** (nested inside the product repo). Both layouts work: the tooling in `scripts/` resolves its own location via the repo root (`git rev-parse --show-toplevel`), so it runs correctly from either path.
