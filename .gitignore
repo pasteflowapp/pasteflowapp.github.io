@@ -1,0 +1,31 @@
+# Jekyll build output (GitHub Pages builds this; never commit it)
+_site/
+.jekyll-cache/
+.jekyll-metadata
+
+# Ruby / Bundler (if a local Gemfile is ever added)
+/vendor/bundle/
+/.bundle/
+
+# Node (scripts under scripts/ have no runtime deps, but keep local installs out)
+node_modules/
+
+# macOS + Google Drive junk (this repo lives inside Google Drive; see AGENTS.md).
+# Drive conflict-copies (names ending in " 2", " (1)", …) are scrubbed by
+# scripts/clean-drive-drift.sh; these entries stop the common stray files from
+# ever being staged in the first place.
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor / temp files
+*~
+*.swp
+*.swo
+*.tmp
+*.bak
+*.orig
