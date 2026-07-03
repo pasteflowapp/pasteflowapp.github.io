@@ -1,0 +1,72 @@
+# Validation-only CI for the PasteFlow public support site.
+#
+# This repo publishes via GitHub Pages' *legacy* builder (Settings → Pages,
+# "Deploy from a branch": main / root). That builder remains the sole publisher.
+# This workflow does NOT deploy — it only builds and checks the site on every
+# push / PR so a broken Jekyll build or a dead internal link is caught before it
+# reaches the live legacy build. Adding a deploy step here would require flipping
+# Pages to the "GitHub Actions" source, which would change the publish target.
+name: Pages build validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      # The github-pages gem pins the exact Jekyll + plugin versions the legacy
+      # Pages builder uses, so a local build here matches production. bundler-cache
+      # caches the installed gems keyed on the Gemfile written in the next step.
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Write Gemfile matching GitHub Pages
+        run: |
+          cat > Gemfile <<'GEMFILE'
+          source "https://rubygems.org"
+          gem "github-pages", group: :jekyll_plugins
+          GEMFILE
+
+      - name: Install gems
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Build site (Jekyll)
+        run: bundle exec jekyll build --trace
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # Fails the build on forbidden relative links / missing pages.
+      - name: Check internal doc links
+        run: node scripts/check-docs-links.mjs
+
+      # Rebuild the search index and fail if the committed copy is stale in
+      # content (the `generated` timestamp is ignored). Keeps
+      # assets/search-index.json honest without publishing anything.
+      - name: Verify search index is in sync
+        run: |
+          node scripts/build-docs-search-index.mjs
+          if ! git diff --quiet -- assets/search-index.json; then
+            # Ignore a timestamp-only difference; flag real content drift.
+            if git diff -- assets/search-index.json | grep -E '^[-+]' | grep -vE '^[-+]{3} ' | grep -v '"generated"' | grep -q .; then
+              echo "::error::assets/search-index.json is out of date. Run: npm run docs:search-index"
+              git --no-pager diff -- assets/search-index.json
+              exit 1
+            fi
+          fi
