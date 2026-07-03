@@ -17,7 +17,7 @@ This repo is a **Jekyll static site** hosted on **GitHub Pages** (the `pasteflow
 
 - `_config.yml` — Jekyll site config, theme, nav pages, permalinks (`pretty`).
 - `_includes/` — theme overrides: `header.html` (nav + search), `footer.html`, `custom-head.html` (favicons, fonts, search bootstrap).
-- `assets/` — `main.scss` / `css/style.scss` (styles), `js/site-search.js`, `images/`, and the generated `search-index.json`.
+- `assets/` — `main.scss` (styles, compiled to `main.css`), `js/site-search.js`, `images/`, and the generated `search-index.json`.
 - `support/` — the help center: `index.md` (hub, includes contact intake) plus topic pages (getting-started, faq, troubleshooting, compatibility, keyboard-shortcuts, privacy, permissions, terms, release-notes, search).
 - `index.html` — root page that meta-redirects `/` → `/support/`.
 - `sandbox/` — a self-contained public typing harness (`sandbox/index.html`), synced from the product repo.
