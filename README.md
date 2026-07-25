@@ -29,13 +29,14 @@ This repo is a **Jekyll static site** hosted on **GitHub Pages** (the `pasteflow
 - Edit Markdown under `support/`, then run `npm run docs:search-index` and `npm run check:docs-links`; commit the regenerated `assets/search-index.json` alongside content.
 - Push to `main`; GitHub Pages rebuilds and publishes automatically. There is no separate CI build step in this repo.
 
-## Three-repo model
+## PasteFlow repository map
 
 | Repo | Purpose |
 | --- | --- |
-| **`pasteflowapp/pasteflowapp.github.io`** (this repo) | Public help, FAQ, privacy, release notes |
-| **`rbediner/pasteflow`** (private) | Chrome extension, worker, CI, internal docs |
-| **`rbediner/pasteflow-issue-project-repo`** (private) | Issues and Kanban |
+| **[`pasteflowapp/pasteflowapp.github.io`](https://github.com/pasteflowapp/pasteflowapp.github.io)** (this repo) | Public help, FAQ, privacy, and release notes |
+| **[`rbediner/pasteflow`](https://github.com/rbediner/pasteflow)** (private) | Chrome extension, worker, CI, and internal product documentation |
+| **[`rbediner/pasteflow-issue-project-repo`](https://github.com/rbediner/pasteflow-issue-project-repo)** (private) | Engineering issues and Kanban workflow |
+| **[`rbediner/pasteflow-growth-engine`](https://github.com/rbediner/pasteflow-growth-engine)** (private) | Cloud-first, policy-aware growth operations, analytics, and conversion work |
 
 ## Edit workflow
 
