@@ -1,0 +1,8 @@
+name: zz bad proof
+on: pull_request
+jobs:
+  bad:
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo deliberately non-compliant (no concurrency, no timeout)
