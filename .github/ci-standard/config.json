@@ -3,5 +3,16 @@
   "release_branches": [],
   "deploy_workflows": [],
   "weekly_minute_budget": 50,
-  "exceptions": []
+  "exceptions": [
+    {
+      "rule": "CI008",
+      "file": "pages-build-validation.yml",
+      "reason": "The pull_request run of this workflow is skipped by a job-level if (CI standard v2), so the merge push is its only GitHub run and does not repeat anything; tests run locally first via local-gate.sh.",
+      "expires": "2027-05-11"
+    }
+  ],
+  "local_gate": [
+    "node scripts/check-docs-links.mjs",
+    "node scripts/build-docs-search-index.mjs && git diff -- assets/search-index.json | grep -E \"^[-+]\" | grep -vE \"^[-+]{3} \" | grep -v generated | (! grep -q .)"
+  ]
 }
